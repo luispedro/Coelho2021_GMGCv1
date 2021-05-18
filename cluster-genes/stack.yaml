@@ -1,0 +1,36 @@
+resolver: lts-9.4
+compiler-check: newer-minor
+
+
+# Packages to be pulled from upstream that are not in the resolver (e.g., acme-missiles-0.3)
+extra-deps:
+  - diskhash-0.0.3.2
+  - conduit-algorithms-0.0.6.0
+
+# Override default flag values for local packages and extra-deps
+flags: {}
+
+# Extra package databases containing global packages
+extra-package-dbs: []
+
+nix:
+    # Not enabled by default, but if --nix is passed on the command line, then
+    # the other options will be used. You can also use ~/.stack/config.yaml
+    # enable: true
+    shell-file: shell.nix
+
+# Control whether we use the GHC we find on the path
+# system-ghc: true
+
+# Require a specific version of stack, using version ranges
+# require-stack-version: -any # Default
+# require-stack-version: >= 0.1.10.0
+
+# Override the architecture used by stack, especially useful on Windows
+# arch: i386
+# arch: x86_64
+
+# Extra directories used by stack for building
+# extra-include-dirs: [/path/to/dir]
+# extra-lib-dirs: [/path/to/dir]
+

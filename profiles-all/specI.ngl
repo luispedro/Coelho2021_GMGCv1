@@ -1,0 +1,50 @@
+ngless "0.6"
+import "parallel" version "0.6"
+import "motus" version "0.1"
+import "specI" version "0.1"
+import "mocat" version "0.0"
+
+samples = readlines('samples.txt')
+sample = lock1(samples)
+input = load_mocat_sample('data/' + sample)
+
+input = preprocess(input, keep_singles=False) using |read|:
+    read = substrim(read, min_quality=25)
+    if len(read) < 45:
+        discard
+
+mapped = map(input, reference='motus')
+mapped = select(mapped) using |mr|:
+    mr = mr.filter(min_match_size=45, min_identity_pc=97, action={drop})
+    if not mr.flag({mapped}):
+        discard
+
+counted = count(mapped, features=['gene'], multiple={dist1})
+collect(motus(counted),
+        current=sample,
+        allneeded=samples,
+        ofile='motus.counts.txt')
+
+input = as_reads(mapped)
+
+mapped = map(input, reference='refmg')
+mapped = select(mapped) using |mr|:
+    mr = mr.filter(min_match_size=45, min_identity_pc=97, action={drop})
+    if not mr.flag({mapped}):
+        discard
+
+collect(count(mapped,
+                features=['specI_cluster'],
+                include_minus1=True),
+    current=sample,
+    allneeded=samples,
+    ofile='specI.raw.counts.txt')
+
+collect(count(mapped,
+                    features=['specI_cluster'],
+                    normalization={scaled},
+                    include_minus1=True),
+    current=sample,
+    allneeded=samples,
+    ofile='specI.scaled.counts.txt')
+

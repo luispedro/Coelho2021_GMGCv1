@@ -1,0 +1,35 @@
+ngless "0.9"
+import "parallel" version "0.6"
+import "mocat" version "0.0"
+
+samples = readlines('allbest.samples.txt')
+sample = lock1(samples)
+
+print("Running sample: " + sample + "\n")
+
+input = load_mocat_sample("data/metagenomes/" + sample)
+
+trimmed = preprocess(input) using |r|:
+    r = substrim(r, min_quality=25)
+    if len(r) < 60:
+        discard
+
+mapped = map(trimmed, fafile='data/GMGC.human-gut.95nr.fna')
+
+filtered = select(mapped) using |mread|:
+    mread = mread.filter(min_identity_pc=95, min_match_size=45)
+    mread = mread.allbest()
+
+write(count(mapped,
+            features=['seqname'],
+            include_minus1=True,
+            discard_zeros=True,
+            multiple={unique_only}),
+    ofile='allbest.out' </> sample + '.unique.txt')
+
+write(count(mapped,
+            features=['seqname'],
+            include_minus1=True,
+            discard_zeros=True,
+            multiple={dist1}),
+    ofile='allbest.out' </> sample + '.dist1.txt')

@@ -1,0 +1,29 @@
+ngless "0.6"
+import "parallel" version "0.6"
+import "mocat" version "0.0"
+
+samples = readlines('samples.txt')
+sample = lock1(samples)
+input = load_mocat_sample('data/' + sample)
+
+input = preprocess(input, keep_singles=False) using |read|:
+    read = substrim(read, min_quality=25)
+    if len(read) < 45:
+        discard
+
+mapped = map(input, fafile='<cold>/freeze12.non_ENV.95nr.fna')
+mapped = select(mapped) using |mr|:
+    mr = mr.filter(min_match_size=45, action={unmatch})
+
+collect(mapstats(mapped),
+        current=sample,
+        allneeded=samples,
+        auto_comments=[{hash}, {script}],
+        ofile='freeze12only.mapstats.txt')
+
+counted = count(mapped, features=['seqname'], multiple={dist1})
+collect(counted,
+        current=sample,
+        allneeded=samples,
+        auto_comments=[{hash}, {script}],
+        ofile='freeze12only.counts.dist1.txt')

@@ -1,0 +1,63 @@
+name:           cluster-genes
+version:        0.0.0
+synopsis:       Redundant gene clustering
+category:       Bioinformatics
+license:        GPL-3
+maintainer:     Luis Pedro Coelho <coelho@embl.de>
+ghc-options:
+    - -Wall
+    - -O2
+    - -threaded
+    - -fwarn-tabs
+    - -rtsopts
+    - ! '"-with-rtsopts=-A64m -n4m -H"'
+
+dependencies:
+  - base >= 4.7 && < 5
+  - async
+  - binary
+  - binary-conduit
+  - bytestring
+  - conduit
+  - conduit-extra
+  - conduit-combinators
+  - conduit-algorithms
+  - containers
+  - data-hash
+  - deepseq
+  - directory
+  - diskhash
+  - exceptions
+  - extra
+  - filepath
+  - filemanip
+  - hashtables
+  - primitive
+  - MissingH
+  - resourcet
+  - temporary
+  - text
+  - transformers
+  - transformers-base
+  - safe
+  - safeio
+  - strict
+  - stringsearch
+  - vector
+  - vector-algorithms
+
+
+source-dirs:
+  - ./src
+
+executables:
+  UnionFind:
+    main: UnionFind.hs
+  AnnotateTriplets:
+    main: AnnotateTriplets.hs
+  MergeTriplets:
+    main: MergeTriplets.hs
+  RetrieveFastaSeqs:
+    main: RetrieveFastaSeqs.hs
+  RetrieveFastaSeqs:
+    main: RetrieveFastaSeqs.hs

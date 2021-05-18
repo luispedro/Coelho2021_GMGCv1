@@ -1,0 +1,43 @@
+## Basic
+
+1. Sort the input by
+    - sequence size
+    - sequence content
+    - header
+
+    GENERATED: {INPUT}.sorted.fna
+
+2. Remove repeats.
+
+    After sorting they are contiguous, so can be done in a single pass
+
+    GENERATED: exact100.filtered.fna
+
+3. Split by sizes
+
+    This is mostly to be able to parallelize the next step
+
+    GENERATED: splits/block.*.fna
+
+4. Rolling hash filter
+
+    GENERATED: copies/#_self & copies/#_##
+
+5. Collect duplicates
+
+    GENERATED: duplicates/#.txt
+
+6. Remove duplicates
+
+    Per block, remove all genes which were found to be duplicates
+
+    GENERATED: cleaned/block.#.fna
+
+7. Concatenate blocks
+
+    GENERATED final.fna
+
+## FILE FORMAT
+
+    Gene <Relationship> Representative
+

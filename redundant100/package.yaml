@@ -1,0 +1,73 @@
+name:           redundant100
+version:        0.0.0
+synopsis:       Redundant gene clustering
+category:       Bioinformatics
+license:        GPL-3
+maintainer:     Luis Pedro Coelho <coelho@embl.de>
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -fwarn-tabs
+  - -fno-warn-missing-signatures
+  - -threaded
+  - -O2
+  - -fno-full-laziness
+  - -rtsopts
+  - ! '"-with-rtsopts=-A64m -n4m -H"'
+
+
+dependencies:
+  - base >= 4.7 && < 5
+  - async
+  - bytestring
+  - conduit
+  - conduit-algorithms
+  - conduit-extra
+  - conduit-combinators
+  - containers
+  - data-hash
+  - deepseq
+  - directory
+  - exceptions
+  - extra
+  - filepath
+  - filemanip
+  - hashtables
+  - primitive
+  - MissingH
+  - resourcet
+  - temporary
+  - text
+  - transformers
+  - transformers-base
+  - safe
+  - safeio
+  - strict
+  - stringsearch
+  - vector
+  - vector-algorithms
+
+
+source-dirs:
+  - ./src
+
+executables:
+  SortSizes:
+    main: SortSizes.hs
+
+  SplitBlocks:
+    main: SplitBlocks.hs
+
+  FindExactOverlaps:
+    main: FindExactOverlaps.hs
+
+  RemoveRepeats:
+    main: RemoveRepeats.hs
+
+  Remove:
+    main: Remove.hs
+
+  CleanupHeaders:
+    main: CleanupHeaders.hs
+  MergeSizes:
+    main: MergeSizes.hs

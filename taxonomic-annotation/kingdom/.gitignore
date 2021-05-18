@@ -1,0 +1,12 @@
+cold
+output
+splits/
+data.
+data/
+splits
+sprot.taxid
+sprot.taxid.sorted
+trembl.taxid
+uniprot_sprot.xml.gz
+uniprot_trembl.xml.gz
+run-chimeras.sh

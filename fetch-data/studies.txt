@@ -1,0 +1,3 @@
+study_accession	directory_name	reference	comment
+PRJNA217052	FijiCOMP	http://www.nature.com/nature/journal/v535/n7612/full/nature18927.html	gut,oral,soil,metaG
+PRJEB11532	Zeevi	http://www.ncbi.nlm.nih.gov/pubmed/26590418	Segal's group diet study

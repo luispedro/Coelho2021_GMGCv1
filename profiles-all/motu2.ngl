@@ -1,0 +1,23 @@
+ngless "0.7"
+import "motus" version "2.0"
+import "parallel" version "0.6"
+import "mocat" version "0.0"
+
+samples = readlines('samples.txt')
+sample = lock1(samples)
+input = load_mocat_sample('data/' + sample)
+
+input = preprocess(input, keep_singles=False) using |read|:
+    read = substrim(read, min_quality=25)
+    if len(read) < 45:
+        discard
+
+collect(motus(input, sample=sample, relative_abundance=true),
+        current=sample,
+        allneeded=samples,
+        ofile='motusv2.relabund.tsv')
+
+collect(motus(input, sample=sample),
+        current=sample,
+        allneeded=samples,
+        ofile='motusv2.insertcount.tsv')

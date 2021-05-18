@@ -1,0 +1,71 @@
+name:           ad-hoc
+version:        0.0.0
+synopsis:       Ad-hoc cleanups etc.
+category:       Bioinformatics
+license:        GPL-3
+maintainer:     Luis Pedro Coelho <coelho@embl.de>
+ghc-options:
+    - -Wall
+    - -O2
+    - -threaded
+    - -fwarn-tabs
+    - -rtsopts
+    - ! '"-with-rtsopts=-A64m -n4m -H"'
+default-extensions:
+ - BangPatterns
+ - OverloadedStrings
+ - LambdaCase
+ - TupleSections
+
+dependencies:
+  - base >= 4.7 && < 5
+  - async
+  - bytestring
+  - conduit
+  - conduit-algorithms
+  - conduit-extra
+  - conduit-combinators
+  - containers
+  - data-hash
+  - deepseq
+  - directory
+  - exceptions
+  - extra
+  - filepath
+  - filemanip
+  - hashtables
+  - primitive
+  - MissingH
+  - resourcet
+  - temporary
+  - text
+  - transformers
+  - transformers-base
+  - safe
+  - safeio
+  - stm
+  - stm-chans
+  - stm-conduit
+  - strict
+  - stringsearch
+  - unordered-containers
+  - vector
+  - vector-algorithms
+
+
+source-dirs:
+  - ./src
+
+executables:
+  RenameFreeze12Headers:
+    main: RenameFreeze12Headers.hs
+    other-modules: []
+  FastaSizes:
+    main: FastaSizes.hs
+    other-modules: []
+  MergeRelationships:
+    main: MergeRelationships.hs
+    other-modules: []
+  FilterTriplets:
+    main: FilterTriplets.hs
+    other-modules: []

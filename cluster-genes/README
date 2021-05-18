@@ -1,0 +1,24 @@
+# Dominant Set Based Gene Clustering
+
+Clusters a large set of genes using a dominant set approach.
+
+## Usage
+
+0. Set values in `config.py`
+1. Run `jug execute build-full-graph.py`. This will use a lot of resources and
+the use of an HPC cluster is required for even medium-sized projects!
+2. Run `jug execute postprocess-diamond.py
+3. Run `generate-relationships.sh`
+
+# TODO
+
+[x] Better union-find. Currently, it is split into parsing and binary
+generation as we can then use jug for parallelism, but it is not very robust
+code.
+[x] Merge postprocess & triplets
+
+[ ] remove the header from nucleotide.redundant files
+[ ] integrate generating & sorting of the triplets into a single function using local disk to avoid IO
+[ ] remove `generate-relationships.sh` as a separate step
+
+LICENSE: GPLv3

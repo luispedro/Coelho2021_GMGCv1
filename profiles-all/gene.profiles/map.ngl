@@ -1,0 +1,30 @@
+ngless "0.6"
+import "parallel" version "0.6"
+import "mocat" version "0.0"
+local import "minimap" version "0.0"
+
+
+sample = ARGV[1]
+
+print("Running sample: " + sample + "\n")
+
+input = load_mocat_sample("/g/scb2/bork/coelho/DD_DeCaF/genecats/data/metagenomes/" + sample)
+
+trimmed = preprocess(input) using |r|:
+    r = substrim(r, min_quality=25)
+    if len(r) < 60:
+        discard
+
+mapped = minimap(trimmed,
+                 #block_size_megabases=82*1024,
+                 #index='/scratch/ralves/genecat_minimap2/index/GMGC.95nr.split.32G.mmi')
+                 index=ARGV[2])
+
+#write(mapped, ofile='outputs/' + sample + '_minimap.sam.gz')
+
+filtered = select(mapped) using |mread|:
+    mread = mread.filter(min_identity_pc=97, min_match_size=45)
+
+write(filtered, ofile='outputs/' + sample + '_minimap.' + ARGV[3] + '.sam.gz')
+
+print("Finished sample: " + sample + "\n")

@@ -1,0 +1,17 @@
+ngless "0.7"
+import "parallel" version "0.6"
+import "mocat" version "0.0"
+
+samples = readlines('samples.txt')
+sample = lock1(samples)
+input = load_mocat_sample('data/' + sample)
+input = preprocess(input) using |r|:
+    r = substrim(r, min_quality=25)
+    if len(r) < 60:
+        discard
+
+collect(qcstats({fastq}),
+    current=sample,
+    allneeded=samples,
+    ofile='input-stats.txt')
+

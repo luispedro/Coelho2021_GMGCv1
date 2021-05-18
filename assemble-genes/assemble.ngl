@@ -1,0 +1,15 @@
+ngless "0.0"
+import "parallel" version "0.0"
+import "mocat" version "0.0"
+
+samples = readlines('samples.txt')
+sample = lock1(samples)
+input = load_mocat_sample('data/' + sample)
+preprocess(input) using |r|:
+    r = substrim(r, min_quality=25)
+    if len(r) < 60:
+        discard
+
+write(assemble(input),
+        ofile='assembled/'+sample+'-assembled.fna')
+

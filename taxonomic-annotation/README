@@ -1,0 +1,35 @@
+# Taxonomic annotation
+
+Using the 2bLCA method
+(http://www.nature.com/ismej/journal/v7/n9/full/ismej201359a.html)
+
+
+Steps:
+
+1. Get the uniref data
+2. Parse uniref100.xml to get the Uniref -> NBCI data [parse-xml.py]
+3. Filter the uniref100 database to get only those sequences that have some TaxID
+4. Index uniref100 data with Diamond
+5. Blast (with diamond) all data against the uniref100 database
+
+    jug execute
+
+6. Get top hits [parse-m8.py]
+    cd splits/ && for d in *.daa; do /g/bork3/home/coelho/work/MOCAT/public/bin/diamond view -a ${d} > ${d}.m8 ; done
+    make 1000RefGeneCat.faa.top
+
+7. For each output [prepare-B2.py]:
+    make dogs.129.B2.faa
+    make splits2/splits2.done
+8. Reblast everything
+
+    jug execute
+
+    cat splits2/*.m8 > reblast.m8
+
+9. Process outputs to get LCA [final.py]
+    make taxonomic.map
+
+
+
+

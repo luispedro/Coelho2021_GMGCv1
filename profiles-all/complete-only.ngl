@@ -1,0 +1,34 @@
+ngless "0.9"
+import "parallel" version "0.6"
+import "mocat" version "0.0"
+
+
+BIOME = ARGV[1]
+samples = readlines('samples' </> BIOME + '.txt')
+sample = lock1(samples)
+input = load_mocat_sample("data" </> sample)
+
+trimmed = preprocess(input) using |r|:
+    r = substrim(r, min_quality=25)
+    if len(r) < 60:
+        discard
+
+mapped = map(trimmed, fafile='cold/subcatalogs/GMGC.'+BIOME+'.95nr.complete.fna')
+
+filtered = select(mapped) using |mread|:
+    mread = mread.filter(min_identity_pc=95, min_match_size=45)
+    mread = mread.allbest()
+
+write(count(filtered,
+            features=['seqname'],
+            include_minus1=True,
+            discard_zeros=True,
+            multiple={unique_only}),
+    ofile='outputs/allbest.complete.out.' + sample + '.unique.txt')
+
+write(count(filtered,
+            features=['seqname'],
+            include_minus1=True,
+            discard_zeros=True,
+            multiple={dist1}),
+    ofile='outputs/allbest.complete.out.' + sample + '.dist1.txt')
