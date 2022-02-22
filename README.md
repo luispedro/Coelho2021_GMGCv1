@@ -1,7 +1,11 @@
 # Towards the biogeography of prokaryotic genes
 
 This is the Supplemental Software package to the manuscript "Towards the
-biogeography of prokaryotic genes" by Coelho _et al._ (_forthcoming_).
+biogeography of prokaryotic genes" by Coelho _et al._:
+
+> Coelho, L.P., Alves, R., del Río, Á.R. et al. Towards the biogeography of
+> prokaryotic genes. Nature 601, 252–256 (2022).
+> https://doi.org/10.1038/s41586-021-04233-4
 
 The purpose of this repository is to archive the code that generated both the
 resource and the analyses in the manuscript.
